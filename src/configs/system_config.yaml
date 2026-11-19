@@ -1,0 +1,10 @@
+# Shared runtime settings used by training, visualization, and evaluation tools.
+compute:
+  device: cuda:0  # Explicit override; omit this key to select CUDA/CPU automatically.
+
+training:
+  startup_cooldown_seconds: 1
+  logging_period: 10
+
+evaluation:
+  prediction_horizons: [0.1, 0.25, 0.5, 0.75, full]  # Fractions of average trajectory length: 0.1 = 10%; full = entire rollout.

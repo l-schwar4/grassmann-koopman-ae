@@ -1,0 +1,54 @@
+# State-conditioned Grassmann Koopman AE for the Duffing double-well oscillator.
+data:
+  system: duffing
+  n_train_traj: 128
+  n_val_traj: 24
+  n_test_traj: 24
+  steps: 500
+  dt: 0.02
+  duffing_transient: 0
+  duffing_damping: 0.3
+  duffing_linear_stiffness: 1.0
+  duffing_cubic_stiffness: 1.0
+  noise_std: 0.0
+  seed: 0
+
+model:
+  state_dim: 2
+  latent_dim: 32
+  grassmann: true
+  grassmann_parameterization: householder
+  grassmann_num_reflections: null
+  grassmann_subspace_dim: 24
+  subspace_selector_network_hidden_dims: [32]
+  subspace_selector_network_activation: tanh
+  encoder_hidden_dims: [64, 32]
+  activation: silu
+  dropout: 0.0
+  operator_init_scale: 0.999
+  operator_init_noise: 0.001
+  rollout_mode: latent
+  reencode_every: [10, 25, 50, 100]
+  subspace_update_every: -1
+
+loss:
+  lusch_alpha1: 1.0
+  lusch_linf_weight: 0.0
+  lusch_l2_weight: 0.0
+  prediction_steps: 50
+  linearity_steps: 50
+  temporal_consistency_weight: 0.1
+
+training:
+  optimizer_steps: 20000
+  batch_size: 1024
+  lr: 0.001
+  weight_decay: 0.0
+  grad_clip: 1.0
+  amp: false
+  seed: 0
+  compile: false
+  num_workers: 0
+  prefetch_factor: 2
+  eval_every: 500
+  save_every: 500

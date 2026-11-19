@@ -1,0 +1,46 @@
+data:
+  system: PAMy2
+  seed: 0
+  pam_data_path: ./data/PAMy2/pamy_data.h5
+  pam_behavior: fixed_movement_fast+fixed_movement_slow
+  # Non-overlapping windows; incomplete tails are discarded after movement splitting.
+  pam_window_size: 100
+  pam_sample_dt: 0.01
+  pam_timestamp_scale: 1.0e-9
+  pam_cache_dir: ./data/PAMy2/cache/windows
+  pam_train_fraction: 0.85
+  dt: 0.002
+
+model:
+  state_dim: 16
+  # Shared power-of-two capacity: latent_dim is 25% of the final encoder width.
+  latent_dim: 32
+  grassmann: false
+  encoder_hidden_dims: [128, 64]
+  activation: silu
+  dropout: 0.0
+  operator_init_scale: 0.999
+  operator_init_noise: 0.001
+  rollout_mode: latent
+  reencode_every: [10, 25, 50, 100]
+
+loss:
+  lusch_alpha1: 1.0
+  lusch_linf_weight: 0.0
+  lusch_l2_weight: 0.0
+  prediction_steps: 30
+  linearity_steps: 30
+
+training:
+  optimizer_steps: 20000
+  batch_size: 256  # Fixed-length windows per batch.
+  lr: 0.001
+  weight_decay: 0.0
+  grad_clip: 1.0
+  amp: false
+  seed: 0
+  compile: false
+  num_workers: 0
+  prefetch_factor: 2
+  eval_every: 500
+  save_every: 500

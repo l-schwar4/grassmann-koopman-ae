@@ -1,0 +1,48 @@
+# Global Koopman autoencoder baseline for the Lorenz-63 system.
+data:
+  system: lorenz
+  lorenz_cache_dir: ./data/lorenz/cache
+  n_train_traj: 128
+  n_val_traj: 12
+  n_test_traj: 12
+  steps: 1000
+  dt: 0.01
+  lorenz_transient: 1000
+  lorenz_sigma: 10.0
+  lorenz_rho: 28.0
+  lorenz_beta: 2.6666666666666665
+  noise_std: 0.0
+  seed: 0
+
+model:
+  state_dim: 3
+  latent_dim: 32
+  grassmann: false
+  encoder_hidden_dims: [64, 32]
+  activation: silu
+  dropout: 0.0
+  operator_init_scale: 0.999
+  operator_init_noise: 0.001
+  rollout_mode: latent
+  reencode_every: [10, 25, 50, 100]
+
+loss:
+  lusch_alpha1: 1.0
+  lusch_linf_weight: 0.0
+  lusch_l2_weight: 0.0
+  prediction_steps: 50
+  linearity_steps: 50
+
+training:
+  optimizer_steps: 20000
+  batch_size: 1024
+  lr: 0.001
+  weight_decay: 0.0
+  grad_clip: 1.0
+  amp: false
+  seed: 0
+  compile: false
+  num_workers: 0
+  prefetch_factor: 2
+  eval_every: 500
+  save_every: 500
