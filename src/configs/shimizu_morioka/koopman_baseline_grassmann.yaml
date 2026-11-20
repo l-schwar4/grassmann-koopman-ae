@@ -18,7 +18,7 @@ model:
   grassmann: true
   grassmann_parameterization: householder
   grassmann_num_reflections: null
-  grassmann_subspace_dim: 8
+  grassmann_subspace_dim: 16
   subspace_selector_network_hidden_dims: [32]
   subspace_selector_network_activation: tanh
   encoder_hidden_dims: [64, 32]
